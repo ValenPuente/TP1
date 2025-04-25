@@ -10,9 +10,12 @@ public class Test {
 		
 		if (v1.equals(v2)) {
 			System.out.println("True");
-		}else {
+		} else {
 			System.out.println("False");
 		}
 	}
+	
+	
+	
 
 }

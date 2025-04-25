@@ -168,7 +168,42 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 		
 	}
 	
-	//public IVehiculo eliminarGenerico();
+	@Override
+	public IVehiculo eliminarGenerico(int pos) {
+		// verificamos si la lista está vacía o si la posición es inválida
+	    if (estaVacia() || pos < 0 || pos >= cantidadElementos()) {
+	        System.out.println("No se puede eliminar: posición inválida o lista vacía.");
+	        return null;
+	    }
+
+	    // si la posición es 0, usamos directamente eliminarPrimero()
+	    if (pos == 0) {
+	        return eliminarPrimero();
+	    }
+	    
+	    INodo actual = primero; 
+	    int contador = 0;
+
+	    while (contador < pos) {
+	        actual = actual.getSiguiente();
+	        contador++;
+	    }
+	    // guardamos los nodos anterior y siguiente al que queremos eliminar
+	    INodo anterior = actual.getAnterior();
+	    INodo siguiente = actual.getSiguiente();
+
+	    // si hay un nodo anterior, lo conectamos con el siguiente
+	    if (anterior != null) {
+	        anterior.setSiguiente(siguiente);
+	    }
+	    // si hay un nodo siguiente, lo conectamos con el anterior
+	    if (siguiente != null) {
+	        siguiente.setAnterior(anterior);
+	    }
+	    // retornamos vehiculo eliminado
+	    return actual.getVehiculo();
+	}
+
 	
 	public IVehiculo obtenerPrimero() {
 		// primero me fijo si la lista está vacía
@@ -199,7 +234,24 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 		}
 	}
 	
-	//public IVehiculo obtenerGenerico(){
+	
+	public IVehiculo obtenerGenerico(int pos) {
+	    if (estaVacia() || pos < 0 || pos >= cantidadElementos()) {
+	        System.out.println("Posición inválida o lista vacía.");
+	        return null;
+	    }
+
+	    INodo actual = primero;
+	    int contador = 0;
+
+	    while (contador < pos) {
+	        actual = actual.getSiguiente();
+	        contador++;
+	    }
+
+	    return actual.getVehiculo(); // vehiculo encontrado
+	}
+
 	
 		
 	
@@ -230,10 +282,41 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	}
 	
 	
-	// public void mostar();
+
+	public void mostrar() {
+	    INodo actual = primero;
+
+	    while (actual != null) { 
+	        System.out.println(actual.getVehiculo());
+	        actual = actual.getSiguiente();
+	    }
+	}
+
 	
-	
-	// public int buscar();
+	public int buscar(IVehiculo v) {
+	    if (estaVacia()) {
+	        return -1;
+	    }
+
+	    INodo actual = primero;
+	    int posicion = 0;
+
+	    while (actual != null) {
+	        IVehiculo actualVehiculo = actual.getVehiculo(); // obtenemos vehiculo del nodo
+
+	        if (actualVehiculo.getMarca().equals(v.getMarca()) && // comparamos marca y patente
+	            actualVehiculo.getPatente().equals(v.getPatente())) {
+	            return posicion;
+	        }
+
+	        actual = actual.getSiguiente();
+	        posicion++;
+	    }
+
+	    return -1; // No se encontró
+	}
+
+
 	
 
 }

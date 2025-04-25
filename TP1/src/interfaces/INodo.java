@@ -15,6 +15,7 @@ public interface INodo {
 	public INodo getAnterior();
 
 	public void setAnterior(INodo anterior);
+
 	
 	
 }

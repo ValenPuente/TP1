@@ -52,5 +52,6 @@ public class Nodo implements INodo {
 	public void setAnterior(INodo anterior) {
 		this.anterior = anterior;
 	}
+
 	
 }

@@ -16,17 +16,17 @@ public interface ILista {
 	
 	public IVehiculo eliminarUltimo();
 
-	//public void eliminarGenerico();
+	public IVehiculo eliminarGenerico(int pos);
 	
 	public IVehiculo obtenerPrimero();
 
 	public IVehiculo obtenerUltimo();
 	
-	//public IVehiculo obtenerGenerico();
+	public IVehiculo obtenerGenerico(int pos);
 
-	// public void mostar;
+	public void mostrar();
 	
-	// public int buscar;
+	public int buscar(IVehiculo v);
 	
 	//public void ordenar();
 
