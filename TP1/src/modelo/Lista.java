@@ -252,19 +252,11 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	    return actual.getVehiculo(); // vehiculo encontrado
 	}
 
-	
-		
-	
+
 	// Métodos extra -->
 	
 	public boolean estaVacia() {
-		boolean respuesta;
-		if (primero == null) {
-			respuesta = true;
-		} else {
-			respuesta = false;
-		}
-		return respuesta;
+		return if (primero == null);
 	}
 	
 	public int cantidadElementos() {
@@ -315,8 +307,5 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 
 	    return -1; // No se encontró
 	}
-
-
-	
 
 }
