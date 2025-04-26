@@ -28,12 +28,6 @@ public interface ILista {
 	
 	public int buscar(IVehiculo v);
 	
-	//public void ordenar();
-
-
-
-
-
-
+	
 
 }

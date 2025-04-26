@@ -14,7 +14,12 @@ public class Nodo implements INodo {
 	// toString pero no lo dejamos de manera predeterminada para evitar el ciclo infinito  -->
 	@Override
 	public String toString() {
-		return "Nodo [anterior=" + (anterior != null ? anterior.getVehiculo() : "null") + // esto es una forma de escribir un if-else donde
+		return "Nodo ["+
+		//anterior=" + (anterior != null ? anterior.getVehiculo() : "null") + 
+		
+		// Si se quita el comentario anterior, se imprime la lista, con el vehiculo anterior en cada nodo
+
+
 				//    					condicion      valor_si_es_verdadero	valor_si_es_falso (si es null la condición)
 		           ", vehiculo=" + vehiculo + 
 		           ", siguiente=" + siguiente + "]";

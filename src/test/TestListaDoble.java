@@ -17,6 +17,7 @@ public class TestListaDoble {
 		
 		
 		// probamos estaVacia() ->
+		System.out.println("Deberia devolver True, indicando que la lista esta vacia: ");
 		System.out.println(l.estaVacia()); // debe devolver True
 		System.out.println("-------------------------------------");
 		
@@ -44,7 +45,11 @@ public class TestListaDoble {
 		l.insertarGenerico(v4, 1);
 		System.out.println(l);
 
-		
+		//probamos imprimirListaConAnteriores() -->
+		System.out.println("Lista con anteriores: ");
+		//.imprimirListaConAnteriores();
+		System.out.println("-------------------------------------");
+
 		// probamos eliminarPrimero() 
 		l.eliminarPrimero();
 		System.out.println(l);

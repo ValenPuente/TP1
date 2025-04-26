@@ -256,7 +256,7 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	// Métodos extra -->
 	
 	public boolean estaVacia() {
-		return if (primero == null);
+		return primero == null;
 	}
 	
 	public int cantidadElementos() {
