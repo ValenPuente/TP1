@@ -157,7 +157,7 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 				// recuperamos dato a eliminar 
 				IVehiculo elementoAEliminar = actual.getSiguiente().getVehiculo();
 				// ahora actual debe apuntar a null, ya que actual será el nuevo último nodo --> eliminamos el ultimo
-				actual.setSiguiente(null);
+				actual.setSiguiente(null); // como actual apunta a uno de los nodos que apunta también primero, se modifica en ambos!!!
 				
 				return elementoAEliminar;
 			}
@@ -169,8 +169,8 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	}
 	
 	@Override
-	public IVehiculo eliminarGenerico(int pos) {
-		// verificamos si la lista está vacía o si la posición es inválida
+	public IVehiculo eliminarGenerico(int pos) { // queremos retornar el dato, es decir, el vehículo del nodo a eliminar!
+		// verificamos si la lista está vacía o si la posición es inválida, y si es así dejamos de buscar
 	    if (estaVacia() || pos < 0 || pos >= cantidadElementos()) {
 	        System.out.println("No se puede eliminar: posición inválida o lista vacía.");
 	        return null;
@@ -181,27 +181,35 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	        return eliminarPrimero();
 	    }
 	    
+	    
+	    // Supongamos que tenemos la siguiente lista:
+	    // L:[anterior=null, dato=[Ford,BB], siguiente=[anterior=[Ford,BB], dato=[Toyota,AA], siguiente=[anterior=[Toyota,AA], dato=[Fiat, CC], siguiente=null]]]
+	    // y queremos eliminar el nodo de la posición 1, el que contiene el dato=[Toyota,AA] -->
+	    
 	    INodo actual = primero; 
 	    int contador = 0;
 
-	    while (contador < pos) {
+	    while (contador < pos) { // recorro hasta estar en el nodo que se desea eliminar 
 	        actual = actual.getSiguiente();
 	        contador++;
 	    }
-	    // guardamos los nodos anterior y siguiente al que queremos eliminar
-	    INodo anterior = actual.getAnterior();
-	    INodo siguiente = actual.getSiguiente();
-
-	    // si hay un nodo anterior, lo conectamos con el siguiente
-	    if (anterior != null) {
-	        anterior.setSiguiente(siguiente);
-	    }
-	    // si hay un nodo siguiente, lo conectamos con el anterior
-	    if (siguiente != null) {
+	    
+	    // una vez salimos del while, estamos en el nodo que deseamos eliminar -->
+	    // null<-nodo1 <-> nodo2 <-> nodo3 <-> null
+	    // y queremos eliminar el nodo2, entonces debemos hacer que siguiente de nodo1 no apunte más a nodo2, sino a nodo3
+	    // y queremos que anterior de nodo3 no apunte más a nodo2 sino a nodo1
+	    
+	    INodo anterior = actual.getAnterior(); // guardamos el nodo anterior
+	    INodo siguiente = actual.getSiguiente(); // guardamos el nodo siguiente
+	    
+	    anterior.setSiguiente(siguiente); // el siguiente de nodo1 es ahora nodo3
+	    
+	    // y para hacer que el anterior de nodo3 sea nodo1 primero debo verificar que ->
+	    if (siguiente != null) { // ya que supongamos que el nodo que deseamos eliminar es el último, nodo3, entonces siguiente es null y no tiene ningún atributo 
 	        siguiente.setAnterior(anterior);
 	    }
 	    // retornamos vehiculo eliminado
-	    return actual.getVehiculo();
+	    return actual.getVehiculo(); // actual es el nodo que deseamos eliminar, por eso devolvemos su vehículo
 	}
 
 	
@@ -296,7 +304,9 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	    while (actual != null) {
 	        IVehiculo actualVehiculo = actual.getVehiculo(); // obtenemos vehiculo del nodo
 
-	        if (actualVehiculo.getMarca().equals(v.getMarca()) && // comparamos marca y patente
+	        if (actualVehiculo.getMarca().equals(v.getMarca()) && // comparamos marca y patente de cada nodo, y hacemos esto porque si comparamos instancias de 
+	        		// clase, solo dará verdadero si tienen la misma dirección de memoria, por lo que no nos sirve. Para comparar instancias de clase, 
+	        		// comparamos atributo con atributo con .equals()
 	            actualVehiculo.getPatente().equals(v.getPatente())) {
 	            return posicion;
 	        }
