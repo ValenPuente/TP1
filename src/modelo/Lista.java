@@ -211,6 +211,39 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	    // retornamos vehiculo eliminado
 	    return actual.getVehiculo(); // actual es el nodo que deseamos eliminar, por eso devolvemos su vehículo
 	}
+	
+	public boolean eliminarGenerico2(IVehiculo dato) {//recibimos en este caso el vehículo a eliminar -->
+		// primero verifico si está vacía la lista-->
+		if (!estaVacia()) {// si no lo está -->
+		    // Supongamos que tenemos la siguiente lista null<-nodo1 <-> nodo2 <-> nodo3 <-> null
+			// recorro la lista hasta encontrar el nodo que contiene el dato que se desea eliminar si es que se encuentra -->
+			INodo actual = primero;
+			while (actual != null) {// para no pasarnos, hasta llegar al último que es null!!
+				if (actual.getVehiculo().getMarca().equals(dato.getMarca()) && actual.getVehiculo().getPatente().equals(dato.getPatente())) {
+					// si coinciden los atributos son iguales entonces estamos en el nodo que queremos eliminar -->
+					// null<-nodo1 <-> nodo2 <-> nodo3 <-> null y quiero eliminar el nodo2 -->
+					// primero recupero el dato
+					INodo siguiente = actual.getSiguiente(); // sería nodo3
+					INodo anterior = actual.getAnterior(); // sería nodo1
+					
+					anterior.setSiguiente(siguiente); // ahora nodo1 apunta a nodo3 y no más a nodo2. Si quisieramos eliminar nodo3 entonces anterior sería 
+					// nodo2 y su atributo siguiente se convierte en null
+					
+					// y para hacer que nodo3 ahora apunte a nodo1 debo verificar lo siguiente primero -->
+					// imaginemos que el nodo que queremos eliminar es el nodo3, el último, entonces siguiente es null. Por lo tanto, no puedo poner que anterior
+					// de null sea nodo2 es por eso que ->
+					if (siguiente != null) { // si es distinto -->
+						siguiente.setAnterior(anterior); // el anterior de nodo3 es ahora nodo1 porque no es null
+					}
+					// si es null siguiente, no hacemos nada porque ya es el fin de la lista, lo único que debemos hacer es marcar que nodo2 apunte a null y listo
+					return true; // porque se pudo eliminar
+				}
+				actual = actual.getSiguiente(); // sigo buscando
+			}
+		}
+		// si llegamos aquí es porque o bien está vacía o porque no se encontró el elemento -->
+		return false;
+	}
 
 	
 	public IVehiculo obtenerPrimero() {
