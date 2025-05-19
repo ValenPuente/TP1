@@ -83,7 +83,7 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 	
 	public void insertarGenerico(IVehiculo v, int pos) {// necesitamos recibir el vehiculo a insertar y la posición en la que se desea insertarlo!
 		// primero verificamos que:
-		if (!estaVacia() && pos>=0 && pos < cantidadElementos()) {// importante verificar que no nos pasemos!->
+		if (!estaVacia() && pos>=0 && pos <= cantidadElementos()) {// importante verificar que no nos pasemos! ->
 			if (pos == 0) { // si puso que la pos es cero ya tenemos un método para eso
 				insertarPrimero(v);
 			}else {
@@ -118,6 +118,37 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 			System.out.println("Error");
 		}
 		
+	}
+	
+	public void insertarGenerico2(int pos, IVehiculo v) {// recibimos posición a insertar y elemento
+		// verificamos si está vacía o no la lista, y si la posición es válida -->
+		if (!estaVacia() && pos >= 0 && pos <= cantidadElementos()) { // Ponemos <= porque si elegimos que se inserte en la última pos, se debe poder!
+			if (pos == 0) {
+				insertarPrimero(v);
+			}else if (pos == cantidadElementos()) { // por si pone de posición la última, la del null!!! 
+				// L: null <- nodo1 <-> nodo2 <-> nodo3 -> null
+				// 				0		  1			2		3
+				insertarUltimo(v);
+			}else {
+				// la pos es != 0 y != cantidadElementos()-->
+				// recorremos lista hasta estar en la pos donde se debe insertar el elemento -->
+				// si mi lista es L: null <- nodo1 <-> nodo2 <-> nodo3 -> null, y quiero insertarlo en donde está el nodo3, en la posición 2 --
+				INodo actual = primero;
+				int contador = 0;
+				while (contador != pos) {
+					actual = actual.getSiguiente();
+					contador++;
+				}
+				// cuando salgo, actual está en la pos del nodo que debemos insertar, en nodo3 --->
+				INodo nodoAInsertar = new Nodo(v); // creamos nodo!
+				nodoAInsertar.setAnterior(actual.getAnterior()); // hacemos que el nodo nuestro tengo de anterior nodo2
+				nodoAInsertar.setSiguiente(actual); // hacemos que el nodo nuestro tenga de anterior nodo3
+				actual.getAnterior().setSiguiente(nodoAInsertar); // y ahora hacemos que nodo2 apunte al nuevo nodo, que ya tiene todo bien sus atributos anterior
+				// y siguiente!
+			}
+		}else {
+			System.out.println("Error");
+		}
 	}
 	
 	public IVehiculo eliminarPrimero() {// queremos retornar el vehiculo del nodo a eliminar
@@ -284,12 +315,15 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 
 	    INodo actual = primero;
 	    int contador = 0;
-
-	    while (contador < pos) {
+	    // si mi lista es L: null <- nodo1 <-> nodo2 <-> nodo3 -> null, y pasamos como pos = 2, entonces tenemos que devolver nodo 3
+	    // recorrremos la lista hasta que contador sea menor a pos -->
+	    while (contador < pos) { // no ponemos <= porque sino nos pasamos del nodo que queremos agregar, y en este caso llegamos al nodo null!
+	    	// en la primera vuelta contador = 0 < 2, entonces actual pasa a ser nodo2, luego contador = 1 < 2, entonces actual pasa a ser el nodo3, el que 
+	    	// queremos obtener, y luego contador = 2 < 2, no entonces salgo del bucle. 
 	        actual = actual.getSiguiente();
 	        contador++;
 	    }
-
+	    // cuando salgamos actual está en el nodo que queremos obtener -->
 	    return actual.getVehiculo(); // vehiculo encontrado
 	}
 
