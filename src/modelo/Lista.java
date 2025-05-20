@@ -262,7 +262,7 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 					
 					// y para hacer que nodo3 ahora apunte a nodo1 debo verificar lo siguiente primero -->
 					// imaginemos que el nodo que queremos eliminar es el nodo3, el último, entonces siguiente es null. Por lo tanto, no puedo poner que anterior
-					// de null sea nodo2 es por eso que ->
+					// de null sea nodo2 porque dará error porque null no es un nodo y no tiene atributos es por eso que ->
 					if (siguiente != null) { // si es distinto -->
 						siguiente.setAnterior(anterior); // el anterior de nodo3 es ahora nodo1 porque no es null
 					}
