@@ -128,11 +128,12 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 			}else if (pos == cantidadElementos()) { // por si pone de posición la última, la del null!!! 
 				// L: null <- nodo1 <-> nodo2 <-> nodo3 -> null
 				// 				0		  1			2		3
-				insertarUltimo(v);
+				insertarUltimo(v); // si pos = 3!
 			}else {
 				// la pos es != 0 y != cantidadElementos()-->
 				// recorremos lista hasta estar en la pos donde se debe insertar el elemento -->
-				// si mi lista es L: null <- nodo1 <-> nodo2 <-> nodo3 -> null, y quiero insertarlo en donde está el nodo3, en la posición 2 --
+				// si mi lista es L: null <- nodo1 <-> nodo2 <-> nodo3 -> null, y quiero insertarlo en donde está el nodo3, en la posición 2 -->
+				// 							  0			1			2		3
 				INodo actual = primero;
 				int contador = 0;
 				while (contador != pos) {
@@ -142,7 +143,8 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 				// cuando salgo, actual está en la pos del nodo que debemos insertar, en nodo3 --->
 				INodo nodoAInsertar = new Nodo(v); // creamos nodo!
 				nodoAInsertar.setAnterior(actual.getAnterior()); // hacemos que el nodo nuestro tengo de anterior nodo2
-				nodoAInsertar.setSiguiente(actual); // hacemos que el nodo nuestro tenga de anterior nodo3
+				nodoAInsertar.setSiguiente(actual); // hacemos que el nodo nuestro tenga de siguiente nodo3
+				actual.setAnterior(nodoAInsertar); // hacemos que el nodo3 tenga de anterior el nodo nuestro
 				actual.getAnterior().setSiguiente(nodoAInsertar); // y ahora hacemos que nodo2 apunte al nuevo nodo, que ya tiene todo bien sus atributos anterior
 				// y siguiente!
 			}
@@ -247,8 +249,11 @@ public class Lista implements ILista { //la clase lista debe hacer lo que diga e
 		// primero verifico si está vacía la lista-->
 		if (!estaVacia()) {// si no lo está -->
 		    // Supongamos que tenemos la siguiente lista null<-nodo1 <-> nodo2 <-> nodo3 <-> null
+			if (primero.getVehiculo().getMarca().equals(dato.getMarca()) && primero.getVehiculo().getPatente().equals(dato.getPatente())) {
+				eliminarPrimero(); // llamo a la función para eliminar el primero!
+			}
 			// recorro la lista hasta encontrar el nodo que contiene el dato que se desea eliminar si es que se encuentra -->
-			INodo actual = primero;
+			INodo actual = primero.getSiguiente(); //ponemos el siguiente ya que si es el primero, se entra al primer if!!
 			while (actual != null) {// para no pasarnos, hasta llegar al último que es null!!
 				if (actual.getVehiculo().getMarca().equals(dato.getMarca()) && actual.getVehiculo().getPatente().equals(dato.getPatente())) {
 					// si coinciden los atributos son iguales entonces estamos en el nodo que queremos eliminar -->
